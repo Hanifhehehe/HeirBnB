@@ -1,7 +1,10 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { Lato } from 'next/font/google'
-import Navbar from './components/Navbar/Navbar'
+import Navbar from './components/navbar/Navbar'
+import ClientOnly from './components/ClientOnly'
+import RegisterModal from './components/modals/RegisterModal'
+import { Toaster } from 'react-hot-toast'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,6 +26,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body >
+        {/* <ClientOnly> */}
+          <Toaster />
+          <RegisterModal />
+        {/* </ClientOnly> */}
         <Navbar />
         {children}
       </body>
