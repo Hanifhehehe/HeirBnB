@@ -5,6 +5,8 @@ import Navbar from './components/navbar/Navbar'
 import ClientOnly from './components/ClientOnly'
 import RegisterModal from './components/modals/RegisterModal'
 import { Toaster } from 'react-hot-toast'
+import LoginModal from './components/modals/LoginModal'
+import getCurrentUser from './actions/getCurrentUser'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,19 +20,22 @@ const font = Lato({
   weight: ['100', '400', '900']
 })
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const currentUser = await getCurrentUser()
+
   return (
     <html lang="en">
       <body >
         {/* <ClientOnly> */}
           <Toaster />
           <RegisterModal />
+          <LoginModal />
         {/* </ClientOnly> */}
-        <Navbar />
+        <Navbar currentUser={currentUser} />
         {children}
       </body>
     </html>
