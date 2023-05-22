@@ -29,7 +29,6 @@ const LoginModal = () => {
         }
     } = useForm<FieldValues>({
         defaultValues: {
-            name: '',
             email: '',
             password: ''
         }
@@ -52,6 +51,11 @@ const LoginModal = () => {
             })
     }
 
+    function handleNoAccount() {
+        registerModal.onOpen()
+        loginModal.onClose()
+    }
+
     const bodyContent = (
         <div className='flex flex-col gap-4'>
             <Heading title='Welcome back to HeirBnB!' subtitle='Login to your account, my lord.' />
@@ -63,13 +67,13 @@ const LoginModal = () => {
     const footerContent = (
         <div className='flex flex-col gap-4 mt-3'>
             <hr />
-            <Button outline label="Login with Apple" icon={AiFillApple} onClick={() => {}} />
-            <Button outline label="Login with Google" icon={FcGoogle} onClick={() => {}} />
-            <Button outline label="Login with GitHub" icon={AiFillGithub} onClick={() => {}} />
+            {/* <Button outline label="Login with Apple" icon={AiFillApple} onClick={() => {}} /> */}
+            <Button outline label="Login with Google" icon={FcGoogle} onClick={() => signIn('google')} />
+            <Button outline label="Login with GitHub" icon={AiFillGithub} onClick={() => signIn('github')} />
             <div className='text-neutral-500 text-center mt-4 font-light'>
                 <div className='justify-center flex flex-row items-center gap-2'>
-                    <div>Already have an account?</div>
-                    <div onClick={registerModal.onClose} className='text-neutral-800 cursor-pointer hover:underline'>Login</div>
+                    <div>Don&#39;t have an account?</div>
+                    <div onClick={handleNoAccount} className='text-neutral-800 cursor-pointer hover:underline'>Login</div>
                 </div>
             </div>
         </div>

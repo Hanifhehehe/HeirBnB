@@ -11,9 +11,12 @@ import Heading from '../Heading';
 import Input from '../inputs/Input';
 import { toast } from 'react-hot-toast';
 import Button from '../Button';
+import useLoginModal from '@/app/hooks/useLoginModal';
+import { signIn } from 'next-auth/react';
 
 const RegisterModal = () => {
     const registerModal = useRegisterModal()
+    const loginModal = useLoginModal()
     const [isLoading, setIsLoading] = useState(false)
 
     const {
@@ -45,6 +48,11 @@ const RegisterModal = () => {
             })
     }
 
+    function handleHaveAccount() {
+        registerModal.onClose()
+        loginModal.onOpen()
+    }
+
     const bodyContent = (
         <div className='flex flex-col gap-4'>
             <Heading title='Welcome to HeirBnB!' subtitle='Create an account, my lord.' />
@@ -58,13 +66,13 @@ const RegisterModal = () => {
     const footerContent = (
         <div className='flex flex-col gap-4 mt-3'>
             <hr />
-            <Button outline label="Sign up with Apple" icon={AiFillApple} onClick={() => {}} />
-            <Button outline label="Sign up with Google" icon={FcGoogle} onClick={() => {}} />
-            <Button outline label="Sign up with GitHub" icon={AiFillGithub} onClick={() => {}} />
+            {/* <Button outline label="Sign up with Apple" icon={AiFillApple} onClick={() => {}} /> */}
+            <Button outline label="Login with Google" icon={FcGoogle} onClick={() => signIn('google')} />
+            <Button outline label="Login with GitHub" icon={AiFillGithub} onClick={() => signIn('github')} />
             <div className='text-neutral-500 text-center mt-4 font-light'>
                 <div className='justify-center flex flex-row items-center gap-2'>
                     <div>Already have an account?</div>
-                    <div onClick={registerModal.onClose} className='text-neutral-800 cursor-pointer hover:underline'>Login</div>
+                    <div onClick={handleHaveAccount} className='text-neutral-800 cursor-pointer hover:underline'>Login</div>
                 </div>
             </div>
         </div>

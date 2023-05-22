@@ -2,9 +2,14 @@
 
 import Image from "next/image"
 
-function Avatar() {
+interface AvatarProps {
+  src: string | null | undefined
+}
+
+function Avatar(props: AvatarProps) {
+  const {src} = props
   return (
-    <Image className="rounded-full" height="30" width="30" alt="Avatar" src="/images/placeholder.jpg" />
+    <Image className="rounded-full" height="30" width="30" alt="Avatar" src={src || `/images/placeholder.jpg`} />
   )
 }
 
