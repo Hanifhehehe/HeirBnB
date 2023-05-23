@@ -9,7 +9,8 @@ import CategoryInput from "../inputs/CategoryInput";
 import { FieldValues, useForm } from "react-hook-form";
 import CountrySelect from "../inputs/CountrySelect";
 import dynamic from "next/dynamic";
-// import Map from "../Map";
+import Counter from "../inputs/Counter";
+import ImageUpload from "../inputs/ImageUpload";
 
 enum STEPS {
   CATEGORY = 0,
@@ -47,8 +48,15 @@ function RentModal() {
 
   const category = watch("category");
   const location = watch("location");
+  const guestCount = watch("guestCount");
+  const roomCount = watch("roomCount");
+  const bathroomCount = watch("bathroomCount");
+  const imageSrc = watch("imageSrc");
 
-  const Map = useMemo(() => dynamic(() => import('@/app/components/Map'), {ssr: false}), [location]) 
+  const Map = useMemo(
+    () => dynamic(() => import("@/app/components/Map"), { ssr: false }),
+    [location]
+  );
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -79,41 +87,94 @@ function RentModal() {
     return "Back";
   }, [step]);
 
-  let bodyContent = (
-    <div className="flex flex-col gap-8">
-      <Heading
-        title="Which of the following best describes your property?"
-        subtitle="Pick a category."
-      />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto">
-        {categories.map((i) => (
-          <div className="col-span-1" key={i.label}>
-            <CategoryInput
-              onClick={(category) => setCustomValue("category", category)}
-              selected={category == i.label}
-              label={i.label}
-              icon={i.icon}
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+  let bodyContent;
 
-  if (step == STEPS.LOCATION) {
-    bodyContent = (
-      <div className="flex flex-col gap-8">
-        <Heading
-          title="Where is your property located?"
-          subtitle="Help guests to find you!"
-        />
-        <CountrySelect
-          value={location}
-          onChange={(value) => setCustomValue("location", value)}
-        />
-        <Map center={location?.latlng} />
-      </div>
-    );
+  switch (step) {
+    case STEPS.CATEGORY:
+      bodyContent = (
+        <div className="flex flex-col gap-8">
+          <Heading
+            title="Which of the following best describes your property?"
+            subtitle="Pick a category."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto">
+            {categories.map((i) => (
+              <div className="col-span-1" key={i.label}>
+                <CategoryInput
+                  onClick={(category) => setCustomValue("category", category)}
+                  selected={category == i.label}
+                  label={i.label}
+                  icon={i.icon}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+      break;
+
+    case STEPS.LOCATION:
+      bodyContent = (
+        <div className="flex flex-col gap-8">
+          <Heading
+            title="Where is your property located?"
+            subtitle="Help guests to find you!"
+          />
+          <CountrySelect
+            value={location}
+            onChange={(value) => setCustomValue("location", value)}
+          />
+          <Map center={location?.latlng} />
+        </div>
+      );
+      break;
+
+    case STEPS.INFO:
+      bodyContent = (
+        <div className="flex flex-col gap-8">
+          <Heading 
+            title="Tell us about your property" 
+          />
+          <Counter
+            title="Guests"
+            subtitle="Please enter the appropriate number of guests."
+            value={guestCount}
+            onChange={value => setCustomValue("guestCount", value)}
+          />
+          <hr/>
+          <Counter
+            title="Rooms"
+            subtitle="Please enter the number of bedrooms."
+            value={roomCount}
+            onChange={value => setCustomValue("roomCount", value)}
+          />
+          <hr/>
+          <Counter
+            title="Guests"
+            subtitle="Please enter the number of bathrooms"
+            value={bathroomCount}
+            onChange={value => setCustomValue("bathroomCount", value)}
+          />
+          <hr/>
+        </div>
+      );
+      break;
+      
+    case STEPS.IMAGES:
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading title="Show off your property!" subtitle="Show guests what your place looks like" />
+                <ImageUpload value={imageSrc} onChange={(value) => setCustomValue('imageSrc', value)}  />
+            </div>
+        );
+        break;
+        
+        default:
+            bodyContent = (
+                <div className="flex flex-col gap-8">
+                    <Heading title="Oh no!" subtitle="Something went wrong" />
+                </div>
+      );
   }
 
   return (
@@ -124,7 +185,7 @@ function RentModal() {
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step == STEPS.CATEGORY ? undefined : onBack}
-      title={`HeirBnB your unused properties`}
+      title={`HeirBnB Your Property`}
       body={bodyContent}
     />
   );
