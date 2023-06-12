@@ -1,7 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { Lato } from 'next/font/google'
-import Navbar from './components/navbarr/Navbar'
+import Navbar from './components/navbar/Navbar'
 import ClientOnly from './components/ClientOnly'
 import RegisterModal from './components/modals/RegisterModal'
 import { Toaster } from 'react-hot-toast'

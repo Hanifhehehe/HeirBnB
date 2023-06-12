@@ -1,6 +1,6 @@
 'use client'
 
-import { categories } from "@/app/components/navbarr/Categories";
+import { categories } from "@/app/components/navbar/Categories";
 import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Container from "@/app/components/Container";
