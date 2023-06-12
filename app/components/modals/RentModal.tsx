@@ -62,7 +62,7 @@ function RentModal() {
 
   const Map = useMemo(
     () => dynamic(() => import("@/app/components/Map"), { ssr: false }),
-    [location]
+    []
   );
 
   const setCustomValue = (id: string, value: any) => {
