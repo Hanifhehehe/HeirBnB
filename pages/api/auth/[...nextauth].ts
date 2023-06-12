@@ -11,12 +11,12 @@ export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
-      clientId: process.env.GITHUB_ID as string,
-      clientSecret: process.env.GITHUB_SECRET as string,
+      clientId: process.env.GITHUB_ID_NEW as string,
+      clientSecret: process.env.GITHUB_SECRET_NEW as string,
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID as string,
-      clientSecret: process.env.GOOGLE_SECRET as string,
+      clientId: process.env.GOOGLE_ID_NEW as string,
+      clientSecret: process.env.GOOGLE_SECRET_NEW as string,
     }),
     CredentialsProvider({
       name: "credentials",
@@ -52,7 +52,7 @@ export const authOptions: AuthOptions = {
   session: {
     strategy: "jwt"
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET_NEW,
 };
 
 export default NextAuth(authOptions)
