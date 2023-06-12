@@ -14,7 +14,7 @@ async function ReservationsPage() {
     }
 
     const reservations = await getReservations({
-        authorId: currentUser.id
+        authorId: currentUser?.id
     })
 
     if (reservations.length == 0) {

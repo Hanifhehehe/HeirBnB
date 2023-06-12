@@ -69,7 +69,7 @@ function UserMenu(props : UserMenuProps) {
                 <MenuItem onClick={() => router.push('/trips')} label="My trips" />
                 <MenuItem onClick={() => router.push('/favorites')} label="My favorites" />
                 <MenuItem onClick={() => router.push('/reservations')} label="My reservations" />
-                <MenuItem onClick={() => {}} label="My castles" />
+                <MenuItem onClick={() => router.push('/properties')} label="My castles" />
                 <MenuItem onClick={rentModal.onOpen} label="HeirBnB my home" />
                 <hr />
                 <MenuItem onClick={handleLogout} label="Logout" />
